@@ -15,3 +15,6 @@ jobs:
     - 
       name: Build the Docker image (cp-algorithm)
       run: docker build cp-algorithm --tag cp-algorithm:$(date +%s)
+    - 
+      name: Build the Docker image (sbt-scala)
+      run: docker build sbt-scala --tag sbt-scala:$(date +%s)
