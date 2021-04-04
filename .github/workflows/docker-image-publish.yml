@@ -36,3 +36,12 @@ jobs:
           tags: |
             xirc/cp-algorithm:${{ steps.generate-datetime-tag.outputs.tag }}
             xirc/cp-algorithm:latest
+      - 
+        name: Push `sbt-scala` image to Docker Hub
+        uses: docker/build-push-action@v2
+        with:
+          context: sbt-scala
+          push: true
+          tags: |
+            xirc/sbt-scala:${{ steps.generate-datetime-tag.outputs.tag }}
+            xirc/sbt-scala:latest
