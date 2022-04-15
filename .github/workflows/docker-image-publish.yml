@@ -6,42 +6,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  push_to_registry:
-    name: Push Docker image to Docker Hub
+
+  publish-cp-algorithm:
+    name: Publish Docker image `cp-algorithm`
     runs-on: ubuntu-latest
     steps:
-      - 
-        name: Check out the repo
-        uses: actions/checkout@v2
-      - 
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      - 
-        name: Login to DockerHub
-        uses: docker/login-action@v1
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/publish-docker-image
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Generate datetime tag
-        id: generate-datetime-tag
-        run: |
-          echo "::set-output name=tag::"$(date --iso-8601)""
-      - 
-        name: Push `cp-algorithm` image to Docker Hub
-        uses: docker/build-push-action@v2
-        with:
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
           context: cp-algorithm
-          push: true
-          tags: |
-            xirc/cp-algorithm:${{ steps.generate-datetime-tag.outputs.tag }}
-            xirc/cp-algorithm:latest
-      - 
-        name: Push `sbt-scala` image to Docker Hub
-        uses: docker/build-push-action@v2
+          image-name: xirc/cp-algorithm
+
+  publish-sbt-scala:
+    name: Publish Docker image `sbt-scala`
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ./.github/actions/publish-docker-image
         with:
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME }}
+          dockerhub-password: ${{ secrets.DOCKERHUB_TOKEN }}
           context: sbt-scala
-          push: true
-          tags: |
-            xirc/sbt-scala:${{ steps.generate-datetime-tag.outputs.tag }}
-            xirc/sbt-scala:latest
+          image-name: xirc/sbt-scala
