@@ -17,8 +17,8 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/*
 
-RUN go get github.com/bazelbuild/bazelisk \
-    && go get github.com/bazelbuild/buildtools/buildifier \
-    && go get github.com/bazelbuild/buildtools/buildozer
+RUN go install github.com/bazelbuild/bazelisk@latest \
+    && go install github.com/bazelbuild/buildtools/buildifier@latest \
+    && go install github.com/bazelbuild/buildtools/buildozer@latest
 
 ENV DEBIAN_FRONTEND=dialog
